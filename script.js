@@ -1,4 +1,4 @@
-const item = [
+const items = [
     {
         title: "Массажер для лица",
         description:"Нефритовый роликовый массажер для лица, лифтинг, стройнящий формирователь",
@@ -106,3 +106,81 @@ const item = [
     },
 
 ];
+
+//Товары после применения поиск/фильтров
+// Которые мы будем показывать пользователю
+
+let currentState = [...items];
+
+//Переменная с контейнером для товаров
+const itemsContainer = document.querySelector('#shop-items');
+
+//шаблон для товаров
+const itemTemplate = document.querySelector('#item-template');
+
+//Текст если ни чего не найдено
+const nothingFound = document.querySelector("#nothing-found");
+
+//Функция для отрисовки
+//В качестве параметра - товарыб которые нужно отисовать
+function renderItems(arr) {
+    //Сбрасываем текст "Ничего не найдено" после предыдущего поиска
+    nothingFound.textContent = "";
+
+    //Чистим контейнер с товарами, если там что то было
+    itemsContainer.innerHTML = "";
+
+    //Отрисовываем товары из переданного параметра arr
+    arr.forEach((item) => {
+        //вызываем prepareShopItem для каждого товара
+        // и подставляем результат в верстку
+        items.itemsContainer.append(prepareShopItem(item));
+
+    });
+
+    //Если массив товара пустой, отображаем текст, что ни чего не нашли
+    if (!arr.lehgth) {
+        nothingFound.textContent = "Ничего не найдено";
+
+    }
+}
+
+//Функция-хелпер для сортировки товаров по алфавиту
+function sortByAlphabet(a, b) {
+    //Смотрим на свойство title
+    //Если title первого товара по алфавиту больше второго...
+    if (a.title > b.title) {
+        return 1;
+    }
+    //Если title второго товара больше
+    if (a.title < b.title) {
+        return -1;
+    }
+    // Если оно равны
+    return 0;
+}
+
+// Вызываем функцию для отрисовки в самом начале
+//И тут же сортируем по алфавиту
+renderItems(currentState.sort((a, b) => sortByAlphabet(a, b)));
+
+
+//Функция для отрисовки конкретного товара
+function prepareShopItem (shopItem) {
+    //Деструктурируем свойства обьекта
+    const {title, description, img, price} = shopItem;
+    
+    //Берем за основу шаблон товара
+    const item = itemTemplate.content.clineNode(true);
+
+    //Наполняем его информацией из обьекта
+    item.querySelector("h1").textContent = title;
+    item.querySelector("p").textContent = description;
+    item.querySelector(".price").textContent = `${price}б.р`;
+    item.querySelector("img").src = img;
+
+    //Возвращаем HTML-элемент
+    return item;
+};
+
+
