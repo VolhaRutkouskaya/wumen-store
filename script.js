@@ -184,7 +184,7 @@ function prepareShopItem(shopItem) {
 };
 
 //Импут для поиска
-const searchInput = document.querySelector("#search-inpu");
+const searchInput = document.querySelector("#search-input");
 
 //Кнопка
 const searchButton = document.querySelector("#search-btn");
@@ -193,7 +193,7 @@ const searchButton = document.querySelector("#search-btn");
 function applySearch() {
     //Взяли значение импута и "причесали его"
     //Привели к нижнему регистру, чтобы написание не мешало поиску
-    const searchString = searchInput.ariaValueMax.trim().toLowerCase();
+    const searchString = searchInput.value.trim().toLowerCase();
 
     //Нашли все товары, в title которых есть searchSring
     currentState = items.filter((el) => el.title.toLowerCase().includes(searchString));
@@ -218,7 +218,7 @@ searchInput.addEventListener("search", applySearch);
 const sortControl = document.querySelector("#sort");
 
 //Обработчик события выбора опции из скелета
-sortControl.addEventListener("chenge", (event) => {
+sortControl.addEventListener("change", (event) => {
     //Атрибут value опции скелета, что выбрал пользователь
     const selectedOption = event.target.value;
 
@@ -227,7 +227,7 @@ sortControl.addEventListener("chenge", (event) => {
         case "expensive": {
             //Сначала дорогие
             currentState.sort((a, b) => b.price - a.price);
-            break
+            break;
         }
         case "cheap": {
             //Сначала дешевые
